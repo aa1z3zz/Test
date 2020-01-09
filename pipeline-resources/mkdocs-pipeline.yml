@@ -1,0 +1,58 @@
+# MkDocs Build / Release Pipeline
+# author: Brad Murray & Nate Smith
+# create date: 7/16/2019
+
+name: $(Date:yyyyMMdd)$(Rev:.r)-mkdocs
+variables:
+  branchName: "gh-pages" # should be the same as your GitHub Pages branch
+  commitMessage: "Automated Release" # shows up in GitHub
+  githubemail: "a80s2zz@mmm.com" # users email you want the commits to appear as
+  githubusername: "a80s2zz" # user you want the commits to appear as
+  githubserver: "github.mmm.com" # GitHub server url
+  githuborg: "mmm" # GitHub organization
+  repositoryname: "bluebird" # GitHub Repo
+  # github_access_token: 'dontDoIt' only store here if you want your access token in your repo (homer: that's bad)
+  # Getting a token: https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line 
+  # Permissions: [repo, read:org, read:repo_hook, read:user, user:email]
+  # Store securely in pipeline secret named github_access_token inside azure devops https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables
+trigger:
+  branches:
+    include:
+    - /* # will fire on all branches, master will go to the root, all others will create a subfolder off of the root with the branch name
+    exclude:
+    - $(branchName) # exclude gh-pages so we don't loop commits
+stages:
+- stage: Build
+  displayName: Build MkDocs
+  jobs:
+  - job: MkDocs_Build
+    pool:
+      name: Hosted VS2017
+    steps:
+    - script: 'python.exe -m pip install mkdocs pymdown-extensions' # install MkDocs on the host
+      displayName: 'Install mkdocs and pymdown'
+
+    - script: 'mkdocs.exe build -c ' # build the site
+      displayName: 'mkdocs build'
+      
+    - publish: $(Build.SourcesDirectory)/site # publish the artifact for the next stage
+      artifact: site
+
+- stage: Deploy
+  displayName: Push to GitHub pages branch
+  jobs:
+  - job: GitHub_Pages_Deploy
+    pool:
+      name: Hosted VS2017
+    steps:
+    - task: DownloadPipelineArtifact@2 # grab the built site artifact
+      inputs:
+        artifact: 'site'
+        path: $(Build.SourcesDirectory)/site
+    - task: PowerShell@2 # run the powershell which will execute the commit
+      displayName: 'PowerShell Script'
+      inputs:
+        targetType: filePath
+        filePath: $(Build.SourcesDirectory)\pipeline-resources\deploy-pages.ps1
+      env:
+        GH_TOKEN: $(github_access_token)

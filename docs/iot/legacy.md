@@ -12,6 +12,14 @@ Hi Patrick
 | 4739 | Bug | update copyright year from 2019 to 2020 |
 
 #### January 2020 
+Hi Patrick
+
+| ID | Work Item Type | Title |
+| -- | -------------- | ----- |
+| 4732 | User Story | User Story 5614: Send command to device |
+| 4739 | Bug | update copyright year from 2019 to 2020 |
+
+#### January 2020 
 4745
 
 | ID | Work Item Type | Title |

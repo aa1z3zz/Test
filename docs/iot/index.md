@@ -1,1 +1,0 @@
-# Overview of IoT Platform

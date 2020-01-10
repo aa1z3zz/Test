@@ -1,4 +1,0 @@
-## Standards
-
-* Overview
-* Development Standards

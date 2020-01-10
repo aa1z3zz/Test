@@ -35,3 +35,4 @@ The October 17th release contains significant device software management feature
 | 2345 | Bug | A second example |
 
 ### Support
+[Bug #4739](https://3m-crsliot.visualstudio.com/web/wi.aspx?pcguid=7f36ebae-bef3-4d71-9669-c36e206df97a&id=4739)(update copyright year from 2019 to 2020) transitioned to Closed by Sandeep Sharma CW

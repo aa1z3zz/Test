@@ -8,6 +8,15 @@ This is January release features
 
 | ID | Work Item Type | Title |
 | -- | -------------- | ----- |
+| 4309 | Bug | APIM failing importing from swagger for apis |
+| 4732 | User Story | User Story 5614: Send command to device |
+| 4739 | Bug | update copyright year from 2019 to 2020 |
+
+#### January 2020 Run
+This is January release features
+
+| ID | Work Item Type | Title |
+| -- | -------------- | ----- |
 | 4732 | User Story | User Story 5614: Send command to device |
 | 4739 | Bug | update copyright year from 2019 to 2020 |
 
